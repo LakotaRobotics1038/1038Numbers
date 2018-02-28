@@ -1,12 +1,15 @@
 #include <Adafruit_NeoPixel.h>
 #include "WS2812_Definitions.h"
-//WRITE WITH TWO BUTTONS
+//Choose which pin the LED signal line is attached to
 #define PIN 4
+//Count the number of total LEDs in the strand and put that number here
 #define LED_COUNT 54
 Adafruit_NeoPixel leds = Adafruit_NeoPixel(LED_COUNT, PIN, NEO_GRB + NEO_KHZ800);
 int buttonPin = 7;
 int oldButtonVal = 0;
-int nPatterns = 4;
+//Defines the number of cases for light patterns
+int nPatterns = 6;
+//Defines the default pattern
 int lightPattern = 1;
 int i = 0;
 void setup()
@@ -40,30 +43,36 @@ void loop()
   switch (lightPattern)
   {
     case 1:
+    //Insert colors based on the attached "WS2812_definitions.h"
+    //Rotate takes 2 colors followed by segment length
       rotate (BLUE, PURPLE, 4);
+    //This defines the direction of the rotation
+    //Without this line it will not rotate
+      i = i - 1;
       break;
     case 2:
       rotate (BLUE, PURPLE, 10);
-      i = i - 1;
+      i = i + 1;
       break;
     case 3:
-      for (int a = 36; a < 78; a++)
+      for (int a = 0; a < LED_COUNT; a++)
       {
-        leds.setPixelColor(a, BLUE);
+        leds.setPixelColor(a, RED);
       }
+      //If you do a solid color, you must call leds.show()
       leds.show();
       break;
     case 4:
-      for (int a = 36; a < 78; a++)
+      for (int a = 0; a < LED_COUNT; a++)
       {
         leds.setPixelColor(a, BLUE);
       }
       leds.show();
       break;
     case 5:
-      for (int a = 36; a < 78; a++)
+      for (int a = 0; a < LED_COUNT; a++)
       {
-        leds.setPixelColor(a, BLUE);
+        leds.setPixelColor(a, PURPLE);
       }
       leds.show();
       break;
@@ -73,7 +82,7 @@ void loop()
       break;
   }
 }
-
+//You should not need to modify any code below this line----------------
 void rotate (unsigned long colora, unsigned long colorb, byte longshort)
 {
   for (int j = i; j < LED_COUNT; j = j + longshort * 2)
