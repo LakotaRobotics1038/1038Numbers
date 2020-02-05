@@ -6,7 +6,7 @@
 #define LED_COUNT 54
 Adafruit_NeoPixel leds = Adafruit_NeoPixel(LED_COUNT, PIN, NEO_GRB + NEO_KHZ800);
 int buttonPin = 7;
-int oldButtonVal = 0;
+int oldButtonVal = 1;
 //Defines the number of cases for light patterns
 int nPatterns = 6;
 //Defines the default pattern
@@ -28,16 +28,16 @@ void loop()
     buttonVal = digitalRead(buttonPin);
     if (buttonVal == LOW && oldButtonVal == HIGH)
     {
-      lightPattern = lightPattern + 1;
+      lightPattern += 1;
+      if (lightPattern > nPatterns)
+      {
+        lightPattern = 1;
+      }
       Serial.println("Light");
-      Serial.print (lightPattern, DEC);
+      Serial.println(lightPattern, DEC);
     }
 
     oldButtonVal = buttonVal;
-    if (lightPattern > nPatterns)
-    {
-      lightPattern = 1;
-    }
     delay (1);
   }
   switch (lightPattern)
