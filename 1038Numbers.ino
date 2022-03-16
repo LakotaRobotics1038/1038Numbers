@@ -18,7 +18,7 @@ Adafruit_NeoPixel leds = Adafruit_NeoPixel(LED_COUNT, PIN, NEO_GRB + NEO_KHZ800)
 // Store the value of the button from the previous loop iteration
 int oldButtonVal = 1;
 // Defines the number of cases for light patterns
-int nPatterns = 6;
+int nPatterns = 5;
 // Defines the default pattern
 int lightPattern = 1;
 int i = 0;
@@ -64,10 +64,6 @@ void loop()
       i = i + 1;
       break;
     case 2:
-      rotate(BLUE, PURPLE, 10);
-      i = i - 1;
-      break;
-    case 3:
       for (int a = 0; a < LED_COUNT; a++)
       {
         leds.setPixelColor(a, RED);
@@ -75,21 +71,21 @@ void loop()
       // If you do a solid color, you must call leds.show()
       leds.show();
       break;
-    case 4:
+    case 3:
       for (int a = 0; a < LED_COUNT; a++)
       {
         leds.setPixelColor(a, BLUE);
       }
       leds.show();
       break;
-    case 5:
+    case 4:
       for (int a = 0; a < LED_COUNT; a++)
       {
         leds.setPixelColor(a, PURPLE);
       }
       leds.show();
       break;
-    case 6:
+    case 5:
       rainbow(i);
       i = i + 1;
       break;
