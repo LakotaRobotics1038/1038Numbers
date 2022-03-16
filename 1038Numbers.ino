@@ -1,31 +1,44 @@
 #include <Adafruit_NeoPixel.h>
 #include "WS2812_Definitions.h"
-//Choose which pin the LED signal line is attached to
+// Choose which pin the LED signal line is attached to
 #define PIN 4
-//Count the number of total LEDs in the strand and put that number here
-#define LED_COUNT 16
+// Choose which pin the mode toggle button is attached to
+#define BUTTON_PIN 7
+// Count the number of total LEDs in the strand and put that number here
+// Number 0 LED Count
+#define LED_COUNT 50
+// Number 1 LED Count
+// #define LED_COUNT 16
+// Number 3 LED Count
+// #define LED_COUNT 43
+// Number 8 LED Count
+// #define LED_COUNT 54
+
 Adafruit_NeoPixel leds = Adafruit_NeoPixel(LED_COUNT, PIN, NEO_GRB + NEO_KHZ800);
-int buttonPin = 7;
+// Store the value of the button from the previous loop iteration
 int oldButtonVal = 1;
-//Defines the number of cases for light patterns
+// Defines the number of cases for light patterns
 int nPatterns = 6;
-//Defines the default pattern
+// Defines the default pattern
 int lightPattern = 1;
 int i = 0;
+
 void setup()
 {
   // put your setup code here, to run once:
   leds.begin();
-  pinMode(buttonPin, INPUT_PULLUP);
+  pinMode(BUTTON_PIN, INPUT_PULLUP);
   Serial.begin (115200);
 }
 
 void loop()
 {
+  // Current value of the button
   int buttonVal;
+
   for (int waiting = 0; waiting < 100; waiting++)
   {
-    buttonVal = digitalRead(buttonPin);
+    buttonVal = digitalRead(BUTTON_PIN);
     if (buttonVal == LOW && oldButtonVal == HIGH)
     {
       lightPattern += 1;
@@ -38,20 +51,20 @@ void loop()
     }
 
     oldButtonVal = buttonVal;
-    delay (1);
+    delay(1);
   }
   switch (lightPattern)
   {
     case 1:
-    //Insert colors based on the attached "WS2812_definitions.h"
-    //Rotate takes 2 colors followed by segment length
-      rotate (BLUE, PURPLE, 4);
-    //This defines the direction of the rotation
-    //Without this line it will not rotate
+    // Insert colors based on the attached "WS2812_definitions.h"
+    // Rotate takes 2 colors followed by segment length
+      rotate(BLUE, PURPLE, 4);
+    // This defines the direction of the rotation
+    // Without this line it will not rotate
       i = i + 1;
       break;
     case 2:
-      rotate (BLUE, PURPLE, 10);
+      rotate(BLUE, PURPLE, 10);
       i = i - 1;
       break;
     case 3:
@@ -59,7 +72,7 @@ void loop()
       {
         leds.setPixelColor(a, RED);
       }
-      //If you do a solid color, you must call leds.show()
+      // If you do a solid color, you must call leds.show()
       leds.show();
       break;
     case 4:
@@ -82,7 +95,7 @@ void loop()
       break;
   }
 }
-//You should not need to modify any code below this line----------------
+// You should not need to modify any code below this line----------------
 void rotate (unsigned long colora, unsigned long colorb, byte longshort)
 {
   for (int j = i; j < LED_COUNT; j = j + longshort * 2)
