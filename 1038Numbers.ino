@@ -56,11 +56,11 @@ void loop()
   switch (lightPattern)
   {
     case 1:
-    // Insert colors based on the attached "WS2812_definitions.h"
-    // Rotate takes 2 colors followed by segment length
+      // Insert colors based on the attached "WS2812_definitions.h"
+      // Rotate takes 2 colors followed by segment length
       rotate(BLUE, PURPLE, 4);
-    // This defines the direction of the rotation
-    // Without this line it will not rotate
+      // This defines the direction of the rotation
+      // Without this line it will not rotate
       i = i + 1;
       break;
     case 2:
